@@ -21,19 +21,30 @@ date_time <- strptime(paste(power_cons_subset$Date,
                             power_cons_subset$Time),
                       "%Y-%m-%d %H:%M:%S")
 
-#Plotting the line graph for the three sub metering variables
-#Save the plot as a PNG file
-png("plot3.png", width = 480, height = 480)
+png("plot4.png", width = 480, height = 480)
+par(mfrow = c(2, 2))
 
+#Plot 1: Global Active Power Line Graph
+plot(date_time, power_cons_subset$Global_active_power,
+     type = "l", xlab = "", ylab = "Global Active Power")
+
+#Plot 2: Voltage Line Graph
+plot(date_time, power_cons_subset$Voltage,
+     type = "l", xlab = "datetime", ylab = "Voltage")
+
+#Plot 3: Energy Sub Metering Line Graph
 plot(date_time, power_cons_subset$Sub_metering_1,
      type = "n", xlab = "", ylab = "Energy sub metering")
 lines(date_time, power_cons_subset$Sub_metering_1)
 lines(date_time, power_cons_subset$Sub_metering_2, col = "red")
 lines(date_time, power_cons_subset$Sub_metering_3, col = "blue")
-
-#Add a legend to the plot
 legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
-       lty = 1,
+       lty = 1, bty = "n",
        col = c("black", "red", "blue"))
+
+
+#Plot 4: Global Reactive Power Line Graph
+plot(date_time, power_cons_subset$Global_reactive_power,
+     type = "l", xlab = "datetime", ylab = "Global_reactive_power")
 
 dev.off()
